@@ -29,7 +29,21 @@ npm run preview
 - Segurar S: defender
 - R: reiniciar a luta
 
-O protótipo usa lutadores desenhados proceduralmente como placeholders. Eles serão substituídos por spritesheets e animações originais/licenciadas em uma etapa artística posterior.
+### Controle USB ou Bluetooth
+
+O jogo também lê gamepads compatíveis com a API Gamepad do navegador (por exemplo, controles Xbox e PlayStation em navegadores compatíveis). Conecte o controle e pressione um botão para ativá-lo no navegador.
+
+- Analógico esquerdo ou direcional: mover
+- A / botão inferior: pular
+- X / botão esquerdo: ataque leve
+- Y / botão superior: ataque pesado
+- B / botão direito: golpe especial
+- LB ou RB: defender
+- START / Menu: reiniciar a luta
+
+Os nomes dos botões variam conforme o controle e o sistema operacional. O mapeamento segue o padrão comum de gamepads no navegador.
+
+Os primeiros lutadores são Iron Man e Caçador de Marte (Martian Manhunter), representados por formas vetoriais temporárias desenhadas no código. Spritesheets e animações mais detalhadas ainda serão criados numa etapa artística posterior.
 
 ## Estado atual
 Base inicial em desenvolvimento. Recursos de multiplayer online, seleção completa de personagens, modo 3v3 e sprites finais ainda não estão implementados.
