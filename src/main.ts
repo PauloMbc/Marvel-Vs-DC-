@@ -150,23 +150,27 @@ class Fighter {
 
     // Ground shadow and a stylized, original placeholder fighter.
     g.fillStyle(0x030611, 0.38); g.fillEllipse(x, this.scene.floorY + 3, 82, 17);
-    if (this.data.name === "NIGHT SENTINEL") {
+    if (this.data.name === "IRON MAN") {
       g.fillStyle(0x15182c, 1);
       g.fillPoints([{x:x-12,y:y-93},{x:x-38,y:y-72},{x:x-31,y:y-27},{x:x-17,y:y-48}], true);
     } else {
       g.fillStyle(accent, 0.95);
       g.fillPoints([{x:x-10*facing,y:y-91},{x:x-34*facing,y:y-64},{x:x-28*facing,y:y-27},{x:x-12*facing,y:y-49}], true);
     }
+    const ironMan = this.data.name === "IRON MAN";
+    const martian = this.data.name === "MARTIAN MANHUNTER";
     // Legs
-    g.fillStyle(0x10182b, 1);
+    g.fillStyle(ironMan ? 0x8e2026 : martian ? 0x183c32 : 0x10182b, 1);
     g.fillRoundedRect(x-16, y-40, 13, 36, 5);
     g.fillRoundedRect(x+3, y-40, 13, 36, 5);
-    g.fillStyle(accent, 1);
+    g.fillStyle(ironMan ? 0xffcf63 : accent, 1);
     g.fillRoundedRect(x-18, y-9, 19, 9, 3);
     g.fillRoundedRect(x+1, y-9, 19, 9, 3);
     // Torso and arms
-    g.fillStyle(main, 1); g.fillRoundedRect(x-21, y-91, 42, 53, 10);
-    g.fillStyle(accent, 1); g.fillRoundedRect(x-17, y-84, 34, 5, 2);
+    g.fillStyle(ironMan ? 0xc92f35 : martian ? 0x16795c : main, 1); g.fillRoundedRect(x-21, y-91, 42, 53, 10);
+    if (ironMan) { g.fillStyle(0xffd36a, 1); g.fillRoundedRect(x-20, y-86, 40, 7, 3); g.fillStyle(0x9eeeff, 1); g.fillCircle(x, y-67, 8); g.fillStyle(0xffffff, 0.9); g.fillCircle(x, y-67, 4); }
+    else if (martian) { g.fillStyle(0x9a253a, 1); g.fillRoundedRect(x-22, y-58, 44, 9, 3); g.fillStyle(0x6bd5a5, 1); g.fillTriangle(x-12, y-86, x+13, y-82, x, y-58); }
+    else { g.fillStyle(accent, 1); g.fillRoundedRect(x-17, y-84, 34, 5, 2); }
     g.fillStyle(main, 1);
     if (this.state === "attack" && this.attack && now - this.attackStarted >= this.attack.windup) {
       const reach = this.attack.reach;
@@ -183,11 +187,19 @@ class Fighter {
       g.fillStyle(accent, 1);
       g.fillCircle(x-20, armY+26, 8); g.fillCircle(x+20, armY+26, 8);
     }
-    // Head, mask and eye highlight
-    g.fillStyle(0xc99476, 1); g.fillCircle(x, y-103, 17);
-    g.fillStyle(accent, 1); g.fillRoundedRect(x-17, y-111, 34, 11, 5);
-    g.fillStyle(0xf6f8ff, 1);
-    g.fillTriangle(x+facing*3, y-108, x+facing*13, y-106, x+facing*4, y-103);
+    // Character-specific helmet and facial silhouette.
+    if (ironMan) {
+      g.fillStyle(0xc52b32, 1); g.fillRoundedRect(x-16, y-120, 32, 34, 9);
+      g.fillStyle(0xffcf63, 1); g.fillRoundedRect(x-11, y-116, 22, 25, 5);
+      g.fillStyle(0xc52b32, 1); g.fillTriangle(x-10, y-93, x+10, y-93, x, y-86);
+      g.fillStyle(0x9defff, 1); g.fillTriangle(x+facing*2, y-108, x+facing*12, y-105, x+facing*3, y-102);
+    } else if (martian) {
+      g.fillStyle(0x16805d, 1); g.fillRoundedRect(x-16, y-120, 32, 34, 10);
+      g.fillStyle(0x0b453c, 1); g.fillTriangle(x-10, y-119, x-3, y-134, x+1, y-118); g.fillTriangle(x+2, y-118, x+11, y-134, x+12, y-117);
+      g.fillStyle(0xf4f1e8, 1); g.fillTriangle(x+facing*2, y-108, x+facing*12, y-106, x+facing*3, y-103);
+    } else {
+      g.fillStyle(0xc99476, 1); g.fillCircle(x, y-103, 17); g.fillStyle(accent, 1); g.fillRoundedRect(x-17, y-111, 34, 11, 5); g.fillStyle(0xf6f8ff, 1); g.fillTriangle(x+facing*3, y-108, x+facing*13, y-106, x+facing*4, y-103);
+    }
     if (this.blocking) {
       g.lineStyle(3, 0x8dd8ff, 0.85); g.strokeCircle(x+facing*28, y-73, 24);
     }
@@ -216,6 +228,7 @@ class FightScene extends Phaser.Scene {
   roundOver = false;
   aiNextAction = 0;
   sparks: Array<{ x:number; y:number; color:number; life:number; maxLife:number; block:boolean }> = [];
+  padPrevious: boolean[] = [];
   constructor() { super("FightScene"); }
 
   create(): void {
@@ -243,10 +256,10 @@ class FightScene extends Phaser.Scene {
     this.roundOver = false; this.sparks = [];
     this.message.setText("");
     this.player = new Fighter(this, this.scale.width*0.29, {
-      name:"NIGHT SENTINEL", color:0x2e78df, accent:0x51d8ff, maxHealth:100, speed:310, jumpPower:520, preferredRange:80
+      name:"IRON MAN", color:0xc92f35, accent:0xffcf63, maxHealth:100, speed:300, jumpPower:510, preferredRange:82
     });
     this.cpu = new Fighter(this, this.scale.width*0.71, {
-      name:"CRIMSON WARDEN", color:0xb82c49, accent:0xffbd59, maxHealth:100, speed:235, jumpPower:480, preferredRange:85
+      name:"MARTIAN MANHUNTER", color:0x16795c, accent:0x9a253a, maxHealth:100, speed:245, jumpPower:500, preferredRange:88
     }, true);
     this.player.facing = 1; this.cpu.facing = -1;
     this.aiNextAction = this.time.now + 650;
@@ -260,14 +273,25 @@ class FightScene extends Phaser.Scene {
     this.player.facing = this.player.x <= this.cpu.x ? 1 : -1;
     this.cpu.facing = -this.player.facing;
 
-    const left = this.keys.A.isDown ? -1 : 0;
-    const right = this.keys.D.isDown ? 1 : 0;
-    const direction = left + right;
-    this.player.blocking = this.keys.S.isDown && this.player.grounded && !this.player.busy;
-    if (Phaser.Input.Keyboard.JustDown(this.keys.W)) this.player.jump();
-    if (Phaser.Input.Keyboard.JustDown(this.keys.J)) this.player.startAttack(MOVES.light, now);
-    if (Phaser.Input.Keyboard.JustDown(this.keys.K)) this.player.startAttack(MOVES.heavy, now);
-    if (Phaser.Input.Keyboard.JustDown(this.keys.L)) this.player.startAttack(MOVES.special, now);
+    const pad = this.input.gamepad?.getPad(0);
+    const axisX = pad?.axes.length ? pad.axes[0].getValue() : 0;
+    const padLeft = !!pad?.buttons[14]?.pressed || axisX < -0.35;
+    const padRight = !!pad?.buttons[15]?.pressed || axisX > 0.35;
+    const direction = (this.keys.A.isDown || padLeft ? -1 : 0) + (this.keys.D.isDown || padRight ? 1 : 0);
+    this.player.blocking = (this.keys.S.isDown || !!pad?.buttons[4]?.pressed || !!pad?.buttons[5]?.pressed) && this.player.grounded && !this.player.busy;
+    const pressed = (index: number): boolean => !!pad?.buttons[index]?.pressed;
+    const justPressed = (index: number): boolean => pressed(index) && !this.padPrevious[index];
+    const jumpPressed = Phaser.Input.Keyboard.JustDown(this.keys.W) || justPressed(0) || justPressed(12);
+    const lightPressed = Phaser.Input.Keyboard.JustDown(this.keys.J) || justPressed(2);
+    const heavyPressed = Phaser.Input.Keyboard.JustDown(this.keys.K) || justPressed(3);
+    const specialPressed = Phaser.Input.Keyboard.JustDown(this.keys.L) || justPressed(1);
+    const restartPressed = Phaser.Input.Keyboard.JustDown(this.keys.R) || justPressed(9);
+    this.padPrevious = Array.from({length: Math.max(16, pad?.buttons.length ?? 0)}, (_, i) => pressed(i));
+    if (jumpPressed) this.player.jump();
+    if (lightPressed) this.player.startAttack(MOVES.light, now);
+    if (heavyPressed) this.player.startAttack(MOVES.heavy, now);
+    if (specialPressed) this.player.startAttack(MOVES.special, now);
+    if (restartPressed) { this.startFight(); return; }
     this.player.move(direction, delta, 45, this.scale.width-45);
 
     this.updateAI(now, delta);
@@ -391,8 +415,8 @@ class FightScene extends Phaser.Scene {
     // Remove last frame's timer label, keeping HUD object count stable.
     const labels=this.children.list.filter(o=>o.name==="timer-label");
     while(labels.length>1) { labels.shift()?.destroy(); }
-    const p=this.add.text(25,barY+25,"NIGHT SENTINEL", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#bdeeff"}).setDepth(21).setName("player-label");
-    const c=this.add.text(w-25,barY+25,"CRIMSON WARDEN", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#ffc0cb"}).setOrigin(1,0).setDepth(21).setName("cpu-label");
+    const p=this.add.text(25,barY+25,"IRON MAN", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#bdeeff"}).setDepth(21).setName("player-label");
+    const c=this.add.text(w-25,barY+25,"MARTIAN MANHUNTER", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#ffc0cb"}).setOrigin(1,0).setDepth(21).setName("cpu-label");
     const oldLabels=this.children.list.filter(o=>o.name==="player-label"||o.name==="cpu-label");
     while(oldLabels.length>2) oldLabels.shift()?.destroy();
     p.setPosition(25,barY+25);c.setPosition(w-25,barY+25);
@@ -408,7 +432,7 @@ const game = new Phaser.Game({
   antialias: true,
   render: { pixelArt: false, roundPixels: false },
   scale: { mode: Phaser.Scale.RESIZE, autoCenter: Phaser.Scale.CENTER_BOTH, width: 960, height: 480 },
-  input: { keyboard: true, mouse: true, touch: true },
+  input: { keyboard: true, gamepad: true, mouse: true, touch: true },
   scene: [FightScene]
 });
 
