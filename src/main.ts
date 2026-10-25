@@ -37,6 +37,7 @@ class Fighter {
   hitFlashUntil = 0;
   data: FighterData;
   gfx: Phaser.GameObjects.Graphics;
+  sprite: Phaser.GameObjects.Image;
   label: Phaser.GameObjects.Text;
   scene: FightScene;
   cpu = false;
@@ -49,6 +50,8 @@ class Fighter {
     this.health = data.maxHealth;
     this.cpu = cpu;
     this.gfx = scene.add.graphics();
+    const textureKey = data.name === "IRON MAN" ? "iron-man-sprite" : "beta-ray-bill-sprite";
+    this.sprite = scene.add.image(x, this.y - 92, textureKey).setDisplaySize(data.name === "IRON MAN" ? 112 : 126, 168).setDepth(5);
     this.label = scene.add.text(x, this.y - 132, data.name, {
       fontFamily: "Inter, sans-serif", fontSize: "12px", fontStyle: "bold", color: "#ffffff",
       stroke: "#08101e", strokeThickness: 4
@@ -145,6 +148,8 @@ class Fighter {
     const y = this.y + bob + crouch;
     const x = this.x;
     const hurt = now < this.hitFlashUntil;
+    this.sprite.setPosition(x, y - 80).setFlipX(facing < 0).setAlpha(hurt ? 0.6 : 1);
+    this.sprite.setDepth(5);
     const main = hurt ? 0xffffff : this.data.color;
     const accent = this.data.accent;
 
@@ -157,6 +162,11 @@ class Fighter {
       g.fillStyle(accent, 0.95);
       g.fillPoints([{x:x-10*facing,y:y-91},{x:x-34*facing,y:y-64},{x:x-28*facing,y:y-27},{x:x-12*facing,y:y-49}], true);
     }
+    // The character art is rendered from the dedicated sprite asset above.
+    // Keep the arena shadow and state/impact effects, but skip placeholder body geometry.
+    this.label.setPosition(x, this.y - 137);
+    this.label.setAlpha(this.state === "ko" ? 0.45 : 1);
+    return;
     const ironMan = this.data.name === "IRON MAN";
     const betaRayBill = this.data.name === "BETA RAY BILL";
     // Legs
@@ -230,6 +240,11 @@ class FightScene extends Phaser.Scene {
   sparks: Array<{ x:number; y:number; color:number; life:number; maxLife:number; block:boolean }> = [];
   padPrevious: boolean[] = [];
   constructor() { super("FightScene"); }
+
+  preload(): void {
+    this.load.svg("iron-man-sprite", "/assets/iron-man.svg", { width: 220, height: 300 });
+    this.load.svg("beta-ray-bill-sprite", "/assets/beta-ray-bill.svg", { width: 240, height: 310 });
+  }
 
   create(): void {
     this.floorY = this.scale.height * 0.79;
