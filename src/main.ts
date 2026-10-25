@@ -242,8 +242,8 @@ class FightScene extends Phaser.Scene {
   constructor() { super("FightScene"); }
 
   preload(): void {
-    this.load.svg("iron-man-sprite", "/assets/iron-man.svg", { width: 220, height: 300 });
-    this.load.svg("beta-ray-bill-sprite", "/assets/beta-ray-bill.svg", { width: 240, height: 310 });
+    this.load.svg("iron-man-sprite", "assets/iron-man.svg", { width: 220, height: 300 });
+    this.load.svg("beta-ray-bill-sprite", "assets/beta-ray-bill.svg", { width: 240, height: 310 });
   }
 
   create(): void {
