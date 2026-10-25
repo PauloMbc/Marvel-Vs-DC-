@@ -43,7 +43,7 @@ O jogo também lê gamepads compatíveis com a API Gamepad do navegador (por exe
 
 Os nomes dos botões variam conforme o controle e o sistema operacional. O mapeamento segue o padrão comum de gamepads no navegador.
 
-Os primeiros lutadores são Iron Man e Caçador de Marte (Martian Manhunter), representados por formas vetoriais temporárias desenhadas no código. Spritesheets e animações mais detalhadas ainda serão criados numa etapa artística posterior.
+Os primeiros lutadores são Iron Man e Beta Ray Bill, representados por formas vetoriais temporárias desenhadas no código. Spritesheets e animações mais detalhadas ainda serão criados numa etapa artística posterior.
 
 ## Estado atual
 Base inicial em desenvolvimento. Recursos de multiplayer online, seleção completa de personagens, modo 3v3 e sprites finais ainda não estão implementados.
@@ -53,3 +53,11 @@ O projeto gera arquivos estáticos na pasta `dist/`, compatíveis com hospedagen
 
 ## Direitos
 Este repositório é um protótipo técnico. Antes de distribuir publicamente uma versão que use personagens, nomes, logos, músicas ou artes de terceiros, confirme as permissões necessárias. Prefira arte original ou devidamente licenciada.
+
+## Publicar gratuitamente para jogar no Fire TV Stick
+
+O repositório inclui uma publicação automática pelo GitHub Pages. Depois de ativar **Settings → Pages → Build and deployment → Source: GitHub Actions**, o workflow compila o projeto e publica o site em:
+
+https://paulombc.github.io/Marvel-Vs-DC-/
+
+A publicação acontece após o workflow terminar com sucesso. No Fire TV Stick, abra esse endereço no navegador disponível no aparelho. Para jogar, conecte um controle Bluetooth compatível; o suporte depende do navegador do Fire TV e deve ser testado no dispositivo.
