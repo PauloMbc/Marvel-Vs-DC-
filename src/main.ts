@@ -148,22 +148,24 @@ class Fighter {
     const y = this.y + bob + crouch;
     const x = this.x;
     const hurt = now < this.hitFlashUntil;
-    this.sprite.setPosition(x, y - 80).setFlipX(facing < 0).setAlpha(hurt ? 0.6 : 1);
-    this.sprite.setDepth(5);
-    const main = hurt ? 0xffffff : this.data.color;
-    const accent = this.data.accent;
-
-    // Ground shadow and a stylized, original placeholder fighter.
+    // Original character artwork is the visible fighter. Apply state-based motion.
+    const elapsed = now - this.attackStarted;
+    const attacking = this.state === "attack" && !!this.attack;
+    const attackActive = attacking && elapsed >= this.attack!.windup;
+    const walkBob = this.state === "walk" ? Math.sin(now / 65) * 5 : 0;
+    const idleBob = this.state === "idle" ? Math.sin(now / 230 + (this.cpu ? 1 : 0)) * 2 : 0;
+    const blockDip = this.blocking || this.state === "block" ? 11 : 0;
+    const lunge = attackActive ? facing * (this.attack!.name === "SPECIAL" ? 17 : 9) : 0;
+    const baseScale = this.data.name === "IRON MAN" ? 0.56 : 0.61;
+    this.sprite.setPosition(x + lunge, y - 88 - walkBob - idleBob - (this.state === "jump" ? 7 : 0) + blockDip)
+      .setFlipX(facing < 0).setAlpha(hurt ? 0.58 : this.state === "ko" ? 0.72 : 1)
+      .setRotation(this.state === "ko" ? facing * 1.15 : this.state === "hurt" ? -facing * 0.12 : attacking ? facing * (attackActive ? 0.08 : -0.035) : this.state === "walk" ? Math.sin(now / 65) * 0.035 : 0)
+      .setScale(baseScale * (attackActive ? 1.05 : 1), baseScale * (this.state === "block" || this.blocking ? 0.92 : this.state === "jump" ? 1.04 : 1))
+      .setDepth(5);
+    // Ground shadow and state effects.
     g.fillStyle(0x030611, 0.38); g.fillEllipse(x, this.scene.floorY + 3, 82, 17);
-    if (this.data.name === "IRON MAN") {
-      g.fillStyle(0x15182c, 1);
-      g.fillPoints([{x:x-12,y:y-93},{x:x-38,y:y-72},{x:x-31,y:y-27},{x:x-17,y:y-48}], true);
-    } else {
-      g.fillStyle(accent, 0.95);
-      g.fillPoints([{x:x-10*facing,y:y-91},{x:x-34*facing,y:y-64},{x:x-28*facing,y:y-27},{x:x-12*facing,y:y-49}], true);
-    }
-    // The character art is rendered from the dedicated sprite asset above.
-    // Keep the arena shadow and state/impact effects, but skip placeholder body geometry.
+    if (this.blocking) { g.lineStyle(3, 0x8dd8ff, 0.85); g.strokeCircle(x + facing * 28, y - 73, 24); }
+    if (this.state === "ko") { g.lineStyle(3, 0xff5d72, 0.9); g.strokeCircle(x, y - 64, 45); }
     this.label.setPosition(x, this.y - 137);
     this.label.setAlpha(this.state === "ko" ? 0.45 : 1);
     return;
