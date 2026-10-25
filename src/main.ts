@@ -158,18 +158,18 @@ class Fighter {
       g.fillPoints([{x:x-10*facing,y:y-91},{x:x-34*facing,y:y-64},{x:x-28*facing,y:y-27},{x:x-12*facing,y:y-49}], true);
     }
     const ironMan = this.data.name === "IRON MAN";
-    const martian = this.data.name === "CAÇADOR DE MARTE";
+    const betaRayBill = this.data.name === "BETA RAY BILL";
     // Legs
-    g.fillStyle(ironMan ? 0x8e2026 : martian ? 0x183c32 : 0x10182b, 1);
+    g.fillStyle(ironMan ? 0x8e2026 : betaRayBill ? 0x183c32 : 0x10182b, 1);
     g.fillRoundedRect(x-16, y-40, 13, 36, 5);
     g.fillRoundedRect(x+3, y-40, 13, 36, 5);
     g.fillStyle(ironMan ? 0xffcf63 : accent, 1);
     g.fillRoundedRect(x-18, y-9, 19, 9, 3);
     g.fillRoundedRect(x+1, y-9, 19, 9, 3);
     // Torso and arms
-    g.fillStyle(ironMan ? 0xc92f35 : martian ? 0x16795c : main, 1); g.fillRoundedRect(x-21, y-91, 42, 53, 10);
+    g.fillStyle(ironMan ? 0xc92f35 : betaRayBill ? 0x16795c : main, 1); g.fillRoundedRect(x-21, y-91, 42, 53, 10);
     if (ironMan) { g.fillStyle(0xffd36a, 1); g.fillRoundedRect(x-20, y-86, 40, 7, 3); g.fillStyle(0x9eeeff, 1); g.fillCircle(x, y-67, 8); g.fillStyle(0xffffff, 0.9); g.fillCircle(x, y-67, 4); }
-    else if (martian) { g.fillStyle(0x9a253a, 1); g.fillRoundedRect(x-22, y-58, 44, 9, 3); g.fillStyle(0x6bd5a5, 1); g.fillTriangle(x-12, y-86, x+13, y-82, x, y-58); }
+    else if (betaRayBill) { g.fillStyle(0x9a253a, 1); g.fillRoundedRect(x-22, y-58, 44, 9, 3); g.fillStyle(0xd9e5ed, 1); g.fillTriangle(x-15, y-100, x-23, y-111, x-7, y-98); g.fillTriangle(x+15, y-100, x+23, y-111, x+7, y-98); g.fillStyle(0x3ab7df, 1); g.fillRoundedRect(x-18, y-87, 36, 7, 3); }
     else { g.fillStyle(accent, 1); g.fillRoundedRect(x-17, y-84, 34, 5, 2); }
     g.fillStyle(main, 1);
     if (this.state === "attack" && this.attack && now - this.attackStarted >= this.attack.windup) {
@@ -193,7 +193,7 @@ class Fighter {
       g.fillStyle(0xffcf63, 1); g.fillRoundedRect(x-11, y-116, 22, 25, 5);
       g.fillStyle(0xc52b32, 1); g.fillTriangle(x-10, y-93, x+10, y-93, x, y-86);
       g.fillStyle(0x9defff, 1); g.fillTriangle(x+facing*2, y-108, x+facing*12, y-105, x+facing*3, y-102);
-    } else if (martian) {
+    } else if (betaRayBill) {
       g.fillStyle(0x16805d, 1); g.fillRoundedRect(x-16, y-120, 32, 34, 10);
       g.fillStyle(0x0b453c, 1); g.fillTriangle(x-10, y-119, x-3, y-134, x+1, y-118); g.fillTriangle(x+2, y-118, x+11, y-134, x+12, y-117);
       g.fillStyle(0xf4f1e8, 1); g.fillTriangle(x+facing*2, y-108, x+facing*12, y-106, x+facing*3, y-103);
@@ -259,7 +259,7 @@ class FightScene extends Phaser.Scene {
       name:"IRON MAN", color:0xc92f35, accent:0xffcf63, maxHealth:100, speed:300, jumpPower:510, preferredRange:82
     });
     this.cpu = new Fighter(this, this.scale.width*0.71, {
-      name:"CAÇADOR DE MARTE", color:0x16795c, accent:0x9a253a, maxHealth:100, speed:245, jumpPower:500, preferredRange:88
+      name:"BETA RAY BILL", color:0x075b8c, accent:0xa52635, maxHealth:100, speed:245, jumpPower:500, preferredRange:88
     }, true);
     this.player.facing = 1; this.cpu.facing = -1;
     this.aiNextAction = this.time.now + 650;
@@ -416,7 +416,7 @@ class FightScene extends Phaser.Scene {
     const labels=this.children.list.filter(o=>o.name==="timer-label");
     while(labels.length>1) { labels.shift()?.destroy(); }
     const p=this.add.text(25,barY+25,"IRON MAN", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#bdeeff"}).setDepth(21).setName("player-label");
-    const c=this.add.text(w-25,barY+25,"CAÇADOR DE MARTE", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#ffc0cb"}).setOrigin(1,0).setDepth(21).setName("cpu-label");
+    const c=this.add.text(w-25,barY+25,"BETA RAY BILL", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#ffc0cb"}).setOrigin(1,0).setDepth(21).setName("cpu-label");
     const oldLabels=this.children.list.filter(o=>o.name==="player-label"||o.name==="cpu-label");
     while(oldLabels.length>2) oldLabels.shift()?.destroy();
     p.setPosition(25,barY+25);c.setPosition(w-25,barY+25);
