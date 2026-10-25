@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="300" viewBox="0 0 220 300">
+<defs><linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff6262"/><stop offset=".55" stop-color="#b91f2b"/><stop offset="1" stop-color="#65101d"/></linearGradient><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe7a0"/><stop offset="1" stop-color="#c68a32"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<ellipse cx="110" cy="286" rx="62" ry="9" fill="#030711" opacity=".45"/>
+<path d="M76 164 48 205 57 252 84 252 92 207 102 185Z" fill="#7d1825" stroke="#ffb94e" stroke-width="4"/><path d="M144 164 172 205 163 252 136 252 128 207 118 185Z" fill="#7d1825" stroke="#ffb94e" stroke-width="4"/>
+<path d="M56 245h31l-2 23H48Z M133 245h31l9 23h-38Z" fill="url(#g)" stroke="#7b4b22" stroke-width="3"/>
+<path d="M70 106 48 126 35 183 59 197 86 153Z" fill="url(#r)" stroke="#ffcc6b" stroke-width="4"/><path d="M150 106 172 126 185 183 161 197 134 153Z" fill="url(#r)" stroke="#ffcc6b" stroke-width="4"/>
+<path d="M77 96 143 96 161 171 143 198 77 198 59 171Z" fill="url(#r)" stroke="#ffcc6b" stroke-width="5"/><path d="M79 104h62l8 12H71Z" fill="url(#g)"/><path d="M91 128 110 119 129 128 137 160 110 176 83 160Z" fill="#68111e" stroke="#f5b24c" stroke-width="4"/><path d="M96 137 110 131 124 137 129 151 110 160 91 151Z" fill="#a9f4ff" filter="url(#glow)"/>
+<path d="M76 80 83 48 110 36 137 48 144 80 131 105 89 105Z" fill="url(#r)" stroke="#ffcc6b" stroke-width="5"/><path d="M84 61 110 47 136 61 131 77 89 77Z" fill="url(#g)"/><path d="M87 79 104 82 100 88 88 86Z M133 79 116 82 120 88 132 86Z" fill="#6ee8ff" filter="url(#glow)"/><path d="M92 94 110 99 128 94 122 105 98 105Z" fill="#60101b"/><path d="M68 110 51 127 64 140 82 121Z M152 110 169 127 156 140 138 121Z" fill="url(#g)" stroke="#9b5d25" stroke-width="3"/>
+<path d="M53 170 66 179 60 192 48 188Z M167 170 154 179 160 192 172 188Z" fill="#b6f7ff" filter="url(#glow)"/>
+</svg>
