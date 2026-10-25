@@ -182,13 +182,13 @@ class Fighter {
     else if (betaRayBill) { g.fillStyle(0x9a253a, 1); g.fillRoundedRect(x-22, y-58, 44, 9, 3); g.fillStyle(0xd9e5ed, 1); g.fillTriangle(x-15, y-100, x-23, y-111, x-7, y-98); g.fillTriangle(x+15, y-100, x+23, y-111, x+7, y-98); g.fillStyle(0x3ab7df, 1); g.fillRoundedRect(x-18, y-87, 36, 7, 3); }
     else { g.fillStyle(accent, 1); g.fillRoundedRect(x-17, y-84, 34, 5, 2); }
     g.fillStyle(main, 1);
-    if (this.state === "attack" && this.attack && now - this.attackStarted >= this.attack.windup) {
-      const reach = this.attack.reach;
+    if (this.state === "attack" && this.attack && now - this.attackStarted >= this.attack!.windup) {
+      const reach = this.attack!.reach;
       g.fillRoundedRect(facing > 0 ? x+10 : x-reach, y-79, reach-10, 17, 7);
-      g.fillStyle(this.attack.color, 1);
-      g.fillCircle(x + facing * (reach-7), y-70, this.attack.name === "SPECIAL" ? 13 : 8);
-      if (this.attack.name === "SPECIAL") {
-        g.lineStyle(3, this.attack.color, 0.85); g.strokeCircle(x + facing * (reach-7), y-70, 21 + Math.sin(now/20)*3);
+      g.fillStyle(this.attack!.color, 1);
+      g.fillCircle(x + facing * (reach-7), y-70, this.attack!.name === "SPECIAL" ? 13 : 8);
+      if (this.attack!.name === "SPECIAL") {
+        g.lineStyle(3, this.attack!.color, 0.85); g.strokeCircle(x + facing * (reach-7), y-70, 21 + Math.sin(now/20)*3);
       }
     } else {
       const armY = this.blocking ? y-82 : y-73;
