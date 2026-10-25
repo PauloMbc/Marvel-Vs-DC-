@@ -158,7 +158,7 @@ class Fighter {
       g.fillPoints([{x:x-10*facing,y:y-91},{x:x-34*facing,y:y-64},{x:x-28*facing,y:y-27},{x:x-12*facing,y:y-49}], true);
     }
     const ironMan = this.data.name === "IRON MAN";
-    const martian = this.data.name === "MARTIAN MANHUNTER";
+    const martian = this.data.name === "CAÇADOR DE MARTE";
     // Legs
     g.fillStyle(ironMan ? 0x8e2026 : martian ? 0x183c32 : 0x10182b, 1);
     g.fillRoundedRect(x-16, y-40, 13, 36, 5);
@@ -259,7 +259,7 @@ class FightScene extends Phaser.Scene {
       name:"IRON MAN", color:0xc92f35, accent:0xffcf63, maxHealth:100, speed:300, jumpPower:510, preferredRange:82
     });
     this.cpu = new Fighter(this, this.scale.width*0.71, {
-      name:"MARTIAN MANHUNTER", color:0x16795c, accent:0x9a253a, maxHealth:100, speed:245, jumpPower:500, preferredRange:88
+      name:"CAÇADOR DE MARTE", color:0x16795c, accent:0x9a253a, maxHealth:100, speed:245, jumpPower:500, preferredRange:88
     }, true);
     this.player.facing = 1; this.cpu.facing = -1;
     this.aiNextAction = this.time.now + 650;
@@ -416,7 +416,7 @@ class FightScene extends Phaser.Scene {
     const labels=this.children.list.filter(o=>o.name==="timer-label");
     while(labels.length>1) { labels.shift()?.destroy(); }
     const p=this.add.text(25,barY+25,"IRON MAN", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#bdeeff"}).setDepth(21).setName("player-label");
-    const c=this.add.text(w-25,barY+25,"MARTIAN MANHUNTER", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#ffc0cb"}).setOrigin(1,0).setDepth(21).setName("cpu-label");
+    const c=this.add.text(w-25,barY+25,"CAÇADOR DE MARTE", {fontFamily:"Inter,sans-serif",fontSize:"10px",fontStyle:"bold",color:"#ffc0cb"}).setOrigin(1,0).setDepth(21).setName("cpu-label");
     const oldLabels=this.children.list.filter(o=>o.name==="player-label"||o.name==="cpu-label");
     while(oldLabels.length>2) oldLabels.shift()?.destroy();
     p.setPosition(25,barY+25);c.setPosition(w-25,barY+25);
