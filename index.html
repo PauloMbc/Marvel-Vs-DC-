@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d18" />
+    <meta name="description" content="Protótipo de jogo de luta 2D para navegador." />
+    <title>Fighter 2D — Arena</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark">F</span><div><strong>FIGHTER <em>2D</em></strong><small>PROTÓTIPO DE COMBATE</small></div></div>
+        <div class="status"><span class="status-dot"></span> SISTEMA DE COMBATE ONLINE</div>
+      </header>
+      <main>
+        <section class="intro"><div class="eyebrow">PROJETO EM DESENVOLVIMENTO</div><h1>ESCOLHA A SUA <span>LUTA.</span></h1><p>Entre na arena. Aprenda os controles. Domine o combate.</p></section>
+        <section class="game-shell">
+          <div class="arena-heading"><span>ARENA DE TREINAMENTO</span><span class="round">ROUND <b>01</b></span><span class="live"><i></i> 1V1 · CPU</span></div>
+          <div id="game"></div>
+          <div class="game-footer"><span>PLAYER 01 <b>JOGADOR</b></span><span>VS</span><span>CPU <b>OPONENTE</b></span></div>
+        </section>
+        <section class="controls">
+          <div><div class="eyebrow">CONTROLES</div><h2>SEU PRÓXIMO MOVIMENTO.</h2></div>
+          <div class="control-grid">
+            <div class="control"><kbd>A</kbd><kbd>D</kbd><span>Mover</span></div>
+            <div class="control"><kbd>W</kbd><span>Pular</span></div>
+            <div class="control"><kbd>J</kbd><span>Ataque leve</span></div>
+            <div class="control"><kbd>K</kbd><span>Ataque pesado</span></div>
+            <div class="control"><kbd>L</kbd><span>Especial</span></div>
+            <div class="control"><kbd>S</kbd><span>Defender</span></div>
+            <div class="control"><kbd>R</kbd><span>Reiniciar luta</span></div>
+          </div>
+        </section>
+        <p class="disclaimer">Versão técnica inicial · Personagens e efeitos visuais temporários, sem arte oficial de terceiros.</p>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
