@@ -1,8 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  // For GitHub Pages project hosting, use base: "/Marvel-Vs-DC-/".
-  // For root-domain static hosting, keep "/".
-  base: "/",
+  // GitHub Pages project URL: https://paulombc.github.io/Marvel-Vs-DC-/
+  base: "/Marvel-Vs-DC-/",
   build: { outDir: "dist", sourcemap: true }
 });
