@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import "./style.css";
+import { preloadCharacters, createCharacterAnims, fighterAnimation } from "./characters";
 
 type FighterState = "idle" | "walk" | "jump" | "attack" | "hurt" | "block" | "ko";
 type MoveConfig = { name: string; damage: number; reach: number; windup: number; active: number; recovery: number; knockback: number; color: number };
@@ -37,7 +38,7 @@ class Fighter {
   hitFlashUntil = 0;
   data: FighterData;
   gfx: Phaser.GameObjects.Graphics;
-  sprite: Phaser.GameObjects.Image;
+  sprite: Phaser.GameObjects.Sprite;
   label: Phaser.GameObjects.Text;
   scene: FightScene;
   cpu = false;
@@ -50,8 +51,12 @@ class Fighter {
     this.health = data.maxHealth;
     this.cpu = cpu;
     this.gfx = scene.add.graphics();
-    const textureKey = data.name === "IRON MAN" ? "iron-man-sprite" : "beta-ray-bill-sprite";
-    this.sprite = scene.add.image(x, this.y - 92, textureKey).setDisplaySize(data.name === "IRON MAN" ? 112 : 126, 168).setDepth(5);
+    const atlasKey = data.name === "IRON MAN" ? "iron_man" : "beta_ray_bill";
+    const fallbackKey = data.name === "IRON MAN" ? "iron-man-sprite" : "beta-ray-bill-sprite";
+    const textureKey = scene.textures.exists(atlasKey) ? atlasKey : fallbackKey;
+    this.sprite = scene.add.sprite(x, this.y, textureKey).setOrigin(0.5, 1).setDepth(5);
+    if (textureKey === atlasKey) this.sprite.setScale((data.name === "IRON MAN" ? 168 : 176) / Math.max(1, this.sprite.height));
+    else this.sprite.setDisplaySize(data.name === "IRON MAN" ? 112 : 126, 168);
     this.label = scene.add.text(x, this.y - 132, data.name, {
       fontFamily: "Inter, sans-serif", fontSize: "12px", fontStyle: "bold", color: "#ffffff",
       stroke: "#08101e", strokeThickness: 4
@@ -156,8 +161,14 @@ class Fighter {
     const idleBob = this.state === "idle" ? Math.sin(now / 230 + (this.cpu ? 1 : 0)) * 2 : 0;
     const blockDip = this.blocking || this.state === "block" ? 11 : 0;
     const lunge = attackActive ? facing * (this.attack!.name === "SPECIAL" ? 17 : 9) : 0;
-    const baseScale = this.data.name === "IRON MAN" ? 0.56 : 0.61;
-    this.sprite.setPosition(x + lunge, y - 88 - walkBob - idleBob - (this.state === "jump" ? 7 : 0) + blockDip)
+    const atlasKey = this.data.name === "IRON MAN" ? "iron_man" : "beta_ray_bill";
+    const isAtlas = this.sprite.texture.key === atlasKey;
+    if (isAtlas) {
+      const animKey = fighterAnimation(atlasKey, this.state);
+      if (this.scene.anims.exists(animKey) && this.sprite.anims.currentAnim?.key !== animKey) this.sprite.play(animKey, true);
+    }
+    const baseScale = isAtlas ? (this.data.name === "IRON MAN" ? 168 : 176) / Math.max(1, this.sprite.height) : (this.data.name === "IRON MAN" ? 0.56 : 0.61);
+    this.sprite.setPosition(x + lunge, y - walkBob - idleBob - (this.state === "jump" ? 7 : 0) + blockDip)
       .setFlipX(facing < 0).setAlpha(hurt ? 0.58 : this.state === "ko" ? 0.72 : 1)
       .setRotation(this.state === "ko" ? facing * 1.15 : this.state === "hurt" ? -facing * 0.12 : attacking ? facing * (attackActive ? 0.08 : -0.035) : this.state === "walk" ? Math.sin(now / 65) * 0.035 : 0)
       .setScale(baseScale * (attackActive ? 1.05 : 1), baseScale * (this.state === "block" || this.blocking ? 0.92 : this.state === "jump" ? 1.04 : 1))
@@ -246,9 +257,11 @@ class FightScene extends Phaser.Scene {
   preload(): void {
     this.load.svg("iron-man-sprite", "assets/iron-man.svg", { width: 220, height: 300 });
     this.load.svg("beta-ray-bill-sprite", "assets/beta-ray-bill.svg", { width: 240, height: 310 });
+    preloadCharacters(this);
   }
 
   create(): void {
+    createCharacterAnims(this);
     this.floorY = this.scale.height * 0.79;
     this.arena = this.add.graphics();
     this.hud = this.add.graphics().setDepth(20);
