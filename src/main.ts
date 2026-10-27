@@ -254,6 +254,11 @@ class FightScene extends Phaser.Scene {
   aiNextAction = 0;
   sparks: Array<{ x:number; y:number; color:number; life:number; maxLife:number; block:boolean }> = [];
   padPrevious: boolean[] = [];
+  touchDirection = 0;
+  touchDirectionUntil = 0;
+  touchBlockUntil = 0;
+  pendingActions = { jump: false, light: false, heavy: false, special: false, restart: false };
+  controlsElement?: HTMLDivElement;
   constructor() { super("FightScene"); }
 
   preload(): void {
@@ -274,13 +279,50 @@ class FightScene extends Phaser.Scene {
     this.help = this.add.text(this.scale.width/2, this.scale.height-17, "A / D MOVER     W PULAR     J LEVE     K PESADO     L ESPECIAL     S DEFENDER     R REINICIAR", {
       fontFamily:"Inter, sans-serif", fontSize:"10px", color:"#b8c6df", letterSpacing:1
     }).setOrigin(0.5,1).setDepth(25);
-    this.keys = this.input.keyboard!.addKeys("A,D,W,S,J,K,L,R") as Record<string, Phaser.Input.Keyboard.Key>;
+    this.keys = this.input.keyboard ? this.input.keyboard.addKeys("A,D,W,S,J,K,L,R") as Record<string, Phaser.Input.Keyboard.Key> : {} as Record<string, Phaser.Input.Keyboard.Key>;
+    this.createRemoteControls();
     this.startFight();
     this.scale.on("resize", (size: Phaser.Structs.Size) => {
       this.floorY = size.height * 0.79;
       this.help.setPosition(size.width/2, size.height-17);
       this.message.setPosition(size.width/2, size.height*0.27);
     });
+  }
+
+  createRemoteControls(): void {
+    const host = document.getElementById("game");
+    if (!host) return;
+    host.style.position = "relative";
+    const panel = document.createElement("div");
+    panel.className = "remote-controls";
+    panel.setAttribute("aria-label", "Controles do jogo");
+    const addButton = (label: string, cls: string, onClick: () => void, hold?: (active: boolean) => void) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "remote-button " + cls;
+      button.textContent = label;
+      button.setAttribute("aria-label", label);
+      button.tabIndex = 0;
+      button.addEventListener("click", onClick);
+      if (hold) {
+        button.addEventListener("pointerdown", (event) => { event.preventDefault(); hold(true); });
+        const release = () => hold(false);
+        button.addEventListener("pointerup", release);
+        button.addEventListener("pointercancel", release);
+        button.addEventListener("pointerleave", release);
+      }
+      panel.appendChild(button);
+    };
+    addButton("◀", "move", () => { this.touchDirection = -1; this.touchDirectionUntil = this.time.now + 350; }, active => { this.touchDirection = active ? -1 : 0; this.touchDirectionUntil = active ? Number.MAX_SAFE_INTEGER : this.time.now; });
+    addButton("▶", "move", () => { this.touchDirection = 1; this.touchDirectionUntil = this.time.now + 350; }, active => { this.touchDirection = active ? 1 : 0; this.touchDirectionUntil = active ? Number.MAX_SAFE_INTEGER : this.time.now; });
+    addButton("DEFENDER", "defend", () => { this.touchBlockUntil = this.time.now + 500; }, active => { this.touchBlockUntil = active ? Number.MAX_SAFE_INTEGER : this.time.now; });
+    addButton("PULAR", "jump", () => { this.pendingActions.jump = true; });
+    addButton("LEVE", "light", () => { this.pendingActions.light = true; });
+    addButton("PESADO", "heavy", () => { this.pendingActions.heavy = true; });
+    addButton("ESPECIAL", "special", () => { this.pendingActions.special = true; });
+    addButton("REINICIAR", "restart", () => { this.pendingActions.restart = true; });
+    host.appendChild(panel);
+    this.controlsElement = panel;
   }
 
   startFight(): void {
@@ -300,7 +342,7 @@ class FightScene extends Phaser.Scene {
   update(_time: number, delta: number): void {
     const now = this.time.now;
     this.drawArena(now);
-    if (Phaser.Input.Keyboard.JustDown(this.keys.R)) { this.startFight(); return; }
+    if (this.keys.R && Phaser.Input.Keyboard.JustDown(this.keys.R)) { this.startFight(); return; }
     if (this.roundOver) { this.drawHud(); this.updateSparks(delta); return; }
     this.player.facing = this.player.x <= this.cpu.x ? 1 : -1;
     this.cpu.facing = -this.player.facing;
@@ -309,15 +351,16 @@ class FightScene extends Phaser.Scene {
     const axisX = pad?.axes.length ? pad.axes[0].getValue() : 0;
     const padLeft = !!pad?.buttons[14]?.pressed || axisX < -0.35;
     const padRight = !!pad?.buttons[15]?.pressed || axisX > 0.35;
-    const direction = (this.keys.A.isDown || padLeft ? -1 : 0) + (this.keys.D.isDown || padRight ? 1 : 0);
-    this.player.blocking = (this.keys.S.isDown || !!pad?.buttons[4]?.pressed || !!pad?.buttons[5]?.pressed) && this.player.grounded && !this.player.busy;
+    const touchDir = now < this.touchDirectionUntil ? this.touchDirection : 0;
+    const direction = ((this.keys.A?.isDown || padLeft || touchDir < 0) ? -1 : 0) + ((this.keys.D?.isDown || padRight || touchDir > 0) ? 1 : 0);
+    this.player.blocking = (!!this.keys.S?.isDown || !!pad?.buttons[4]?.pressed || !!pad?.buttons[5]?.pressed || now < this.touchBlockUntil) && this.player.grounded && !this.player.busy;
     const pressed = (index: number): boolean => !!pad?.buttons[index]?.pressed;
     const justPressed = (index: number): boolean => pressed(index) && !this.padPrevious[index];
-    const jumpPressed = Phaser.Input.Keyboard.JustDown(this.keys.W) || justPressed(0) || justPressed(12);
-    const lightPressed = Phaser.Input.Keyboard.JustDown(this.keys.J) || justPressed(2);
-    const heavyPressed = Phaser.Input.Keyboard.JustDown(this.keys.K) || justPressed(3);
-    const specialPressed = Phaser.Input.Keyboard.JustDown(this.keys.L) || justPressed(1);
-    const restartPressed = Phaser.Input.Keyboard.JustDown(this.keys.R) || justPressed(9);
+    const keyJust = (key: string): boolean => !!this.keys[key] && Phaser.Input.Keyboard.JustDown(this.keys[key]);\n    const jumpPressed = keyJust("W") || justPressed(0) || justPressed(12) || this.pendingActions.jump;
+    const lightPressed = keyJust("J") || justPressed(2) || this.pendingActions.light;
+    const heavyPressed = keyJust("K") || justPressed(3) || this.pendingActions.heavy;
+    const specialPressed = keyJust("L") || justPressed(1) || this.pendingActions.special;
+    const restartPressed = keyJust("R") || justPressed(9) || this.pendingActions.restart;\n    this.pendingActions = { jump: false, light: false, heavy: false, special: false, restart: false };
     this.padPrevious = Array.from({length: Math.max(16, pad?.buttons.length ?? 0)}, (_, i) => pressed(i));
     if (jumpPressed) this.player.jump();
     if (lightPressed) this.player.startAttack(MOVES.light, now);
