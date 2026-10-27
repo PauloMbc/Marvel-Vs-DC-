@@ -182,6 +182,8 @@ class Fighter {
     return;
     const ironMan = this.data.name === "IRON MAN";
     const betaRayBill = this.data.name === "BETA RAY BILL";
+    const accent = this.data.accent;
+    const main = this.data.color;
     // Legs
     g.fillStyle(ironMan ? 0x8e2026 : betaRayBill ? 0x183c32 : 0x10182b, 1);
     g.fillRoundedRect(x-16, y-40, 13, 36, 5);
