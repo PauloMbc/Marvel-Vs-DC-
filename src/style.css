@@ -17,3 +17,17 @@
 .remote-button.special{right:16px;bottom:134px}
 .remote-button.restart{right:16px;top:16px;min-height:36px;min-width:92px;font-size:10px}
 @media(max-width:600px){.remote-button{min-width:54px;min-height:44px;padding:8px;font-size:10px}.remote-button.move{left:8px;bottom:8px;min-width:50px}.remote-button.move:nth-child(2){left:64px}.remote-button.defend{left:26px;bottom:60px;min-width:76px}.remote-button.jump{right:8px;bottom:8px}.remote-button.light{right:68px;bottom:60px}.remote-button.heavy{right:8px;bottom:60px}.remote-button.special{right:8px;bottom:112px}.remote-button.restart{right:8px;top:8px}}
+
+
+/* TV/Fire Stick play mode: keep the arena visible without page scrolling. */
+html,body{width:100%;height:100%;min-height:100%;overflow:hidden}
+#app{width:100%;max-width:none;height:100dvh;min-height:0;margin:0;padding:0}
+.topbar,.intro,.controls,.disclaimer{display:none!important}
+.game-shell{width:100%;height:100dvh;max-height:100dvh;border:0;display:flex;flex-direction:column}
+.arena-heading{flex:0 0 34px;height:34px}
+#game{width:100%;height:calc(100dvh - 62px);min-height:0;max-height:none;aspect-ratio:auto;flex:1;touch-action:none}
+#game canvas{width:100%!important;height:100%!important;object-fit:contain;touch-action:none}
+.game-footer{flex:0 0 28px;padding:5px 12px;font-size:9px}
+.remote-controls{position:absolute;inset:0}
+.remote-button{z-index:60;opacity:.96}
+@media(max-width:600px){#app{padding:0}.arena-heading{flex-basis:28px;height:28px}#game{min-height:0;height:calc(100dvh - 54px)}.game-footer{flex-basis:26px;padding:4px 8px}}
