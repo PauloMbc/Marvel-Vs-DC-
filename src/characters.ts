@@ -3,7 +3,7 @@ import Phaser from "phaser";
 /** Loads the real character atlases. Relative paths work on GitHub Pages project sites. */
 export function preloadCharacters(scene: Phaser.Scene): void {
   scene.load.atlas("iron_man", "assets/characters/iron_man.png", "assets/characters/iron_man.json");
-  scene.load.atlas("beta_ray_bill", "assets/characters/beta_ray_bill.png", "assets/characters/beta_ray_bill.json");
+  scene.load.atlas("beta_ray_bill", "assets/characters/beta_ray_bill (1).png", "assets/characters/beta_ray_bill.json");
 }
 
 function frames(texture: string, ids: number[]): Phaser.Types.Animations.AnimationFrame[] {
