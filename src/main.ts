@@ -259,6 +259,8 @@ class FightScene extends Phaser.Scene {
   touchBlockUntil = 0;
   pendingActions = { jump: false, light: false, heavy: false, special: false, restart: false };
   controlsElement?: HTMLDivElement;
+  remoteMoveKey = 0;
+  remoteKeyTimer?: number;
   constructor() { super("FightScene"); }
 
   preload(): void {
@@ -281,6 +283,9 @@ class FightScene extends Phaser.Scene {
     }).setOrigin(0.5,1).setDepth(25);
     this.keys = this.input.keyboard ? this.input.keyboard.addKeys("A,D,W,S,J,K,L,R") as Record<string, Phaser.Input.Keyboard.Key> : {} as Record<string, Phaser.Input.Keyboard.Key>;
     this.createRemoteControls();
+    window.addEventListener("keydown", this.handleRemoteKeyDown, true);
+    window.addEventListener("keyup", this.handleRemoteKeyUp, true);
+    window.addEventListener("blur", () => { this.remoteMoveKey = 0; this.touchDirection = 0; });
     this.startFight();
     this.scale.on("resize", (size: Phaser.Structs.Size) => {
       this.floorY = size.height * 0.79;
@@ -288,6 +293,36 @@ class FightScene extends Phaser.Scene {
       this.message.setPosition(size.width/2, size.height*0.27);
     });
   }
+
+  handleRemoteKeyDown = (event: KeyboardEvent): void => {
+    const key = event.key;
+    if (["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"," "].includes(key)) event.preventDefault();
+    if (key === "ArrowLeft" || key === "ArrowRight") {
+      this.remoteMoveKey = key === "ArrowLeft" ? -1 : 1;
+      this.touchDirection = this.remoteMoveKey;
+      this.touchDirectionUntil = Number.MAX_SAFE_INTEGER;
+      event.stopPropagation();
+    } else if (key === "ArrowUp") {
+      this.pendingActions.jump = true; event.stopPropagation();
+    } else if (key === "ArrowDown") {
+      this.touchBlockUntil = Number.MAX_SAFE_INTEGER; event.stopPropagation();
+    } else if (key === "Enter" || key === " ") {
+      const focused = document.activeElement as HTMLElement | null;
+      if (focused?.classList.contains("remote-button")) {
+        event.preventDefault();
+        focused.click();
+        event.stopPropagation();
+      }
+    } else if (key.toLowerCase() === "z") this.pendingActions.light = true;
+    else if (key.toLowerCase() === "x") this.pendingActions.heavy = true;
+    else if (key.toLowerCase() === "c") this.pendingActions.special = true;
+  };
+  handleRemoteKeyUp = (event: KeyboardEvent): void => {
+    if ((event.key === "ArrowLeft" && this.remoteMoveKey < 0) || (event.key === "ArrowRight" && this.remoteMoveKey > 0)) {
+      this.remoteMoveKey = 0; this.touchDirection = 0; this.touchDirectionUntil = this.time.now;
+    }
+    if (event.key === "ArrowDown") this.touchBlockUntil = this.time.now;
+  };
 
   createRemoteControls(): void {
     const host = document.getElementById("game");
