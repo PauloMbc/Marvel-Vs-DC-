@@ -1,0 +1,565 @@
+{
+ "frames": {
+  "iron_man_22": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 113,
+    "h": 275
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 113,
+    "h": 275
+   },
+   "sourceSize": {
+    "w": 113,
+    "h": 275
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_09": {
+   "frame": {
+    "x": 115,
+    "y": 0,
+    "w": 140,
+    "h": 234
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 140,
+    "h": 234
+   },
+   "sourceSize": {
+    "w": 140,
+    "h": 234
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_01": {
+   "frame": {
+    "x": 257,
+    "y": 0,
+    "w": 134,
+    "h": 232
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 232
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 232
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_03": {
+   "frame": {
+    "x": 393,
+    "y": 0,
+    "w": 142,
+    "h": 231
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 142,
+    "h": 231
+   },
+   "sourceSize": {
+    "w": 142,
+    "h": 231
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_08": {
+   "frame": {
+    "x": 537,
+    "y": 0,
+    "w": 144,
+    "h": 230
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 144,
+    "h": 230
+   },
+   "sourceSize": {
+    "w": 144,
+    "h": 230
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_10": {
+   "frame": {
+    "x": 683,
+    "y": 0,
+    "w": 151,
+    "h": 227
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 151,
+    "h": 227
+   },
+   "sourceSize": {
+    "w": 151,
+    "h": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_11": {
+   "frame": {
+    "x": 836,
+    "y": 0,
+    "w": 113,
+    "h": 225
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 113,
+    "h": 225
+   },
+   "sourceSize": {
+    "w": 113,
+    "h": 225
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_02": {
+   "frame": {
+    "x": 0,
+    "y": 277,
+    "w": 150,
+    "h": 223
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 150,
+    "h": 223
+   },
+   "sourceSize": {
+    "w": 150,
+    "h": 223
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_04": {
+   "frame": {
+    "x": 152,
+    "y": 277,
+    "w": 145,
+    "h": 210
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 145,
+    "h": 210
+   },
+   "sourceSize": {
+    "w": 145,
+    "h": 210
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_12": {
+   "frame": {
+    "x": 299,
+    "y": 277,
+    "w": 146,
+    "h": 210
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 146,
+    "h": 210
+   },
+   "sourceSize": {
+    "w": 146,
+    "h": 210
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_23": {
+   "frame": {
+    "x": 447,
+    "y": 277,
+    "w": 447,
+    "h": 205
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 447,
+    "h": 205
+   },
+   "sourceSize": {
+    "w": 447,
+    "h": 205
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_24": {
+   "frame": {
+    "x": 0,
+    "y": 502,
+    "w": 510,
+    "h": 201
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 510,
+    "h": 201
+   },
+   "sourceSize": {
+    "w": 510,
+    "h": 201
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_05": {
+   "frame": {
+    "x": 512,
+    "y": 502,
+    "w": 236,
+    "h": 200
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 236,
+    "h": 200
+   },
+   "sourceSize": {
+    "w": 236,
+    "h": 200
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_06": {
+   "frame": {
+    "x": 750,
+    "y": 502,
+    "w": 244,
+    "h": 200
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 244,
+    "h": 200
+   },
+   "sourceSize": {
+    "w": 244,
+    "h": 200
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_13": {
+   "frame": {
+    "x": 0,
+    "y": 705,
+    "w": 240,
+    "h": 199
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 199
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 199
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_16": {
+   "frame": {
+    "x": 242,
+    "y": 705,
+    "w": 178,
+    "h": 176
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 178,
+    "h": 176
+   },
+   "sourceSize": {
+    "w": 178,
+    "h": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_17": {
+   "frame": {
+    "x": 422,
+    "y": 705,
+    "w": 167,
+    "h": 164
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 167,
+    "h": 164
+   },
+   "sourceSize": {
+    "w": 167,
+    "h": 164
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_18": {
+   "frame": {
+    "x": 591,
+    "y": 705,
+    "w": 141,
+    "h": 141
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 141,
+    "h": 141
+   },
+   "sourceSize": {
+    "w": 141,
+    "h": 141
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_19": {
+   "frame": {
+    "x": 734,
+    "y": 705,
+    "w": 133,
+    "h": 134
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 133,
+    "h": 134
+   },
+   "sourceSize": {
+    "w": 133,
+    "h": 134
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_20": {
+   "frame": {
+    "x": 869,
+    "y": 705,
+    "w": 129,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 129,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 129,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_21": {
+   "frame": {
+    "x": 0,
+    "y": 906,
+    "w": 122,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_14": {
+   "frame": {
+    "x": 124,
+    "y": 906,
+    "w": 187,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 187,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 187,
+    "h": 112
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  },
+  "iron_man_25": {
+   "frame": {
+    "x": 313,
+    "y": 906,
+    "w": 145,
+    "h": 108
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 145,
+    "h": 108
+   },
+   "sourceSize": {
+    "w": 145,
+    "h": 108
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 1
+   }
+  }
+ },
+ "meta": {
+  "image": "iron_man.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1024,
+   "h": 1028
+  },
+  "scale": "1"
+ }
+}
