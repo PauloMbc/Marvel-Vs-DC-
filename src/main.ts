@@ -356,11 +356,13 @@ class FightScene extends Phaser.Scene {
     this.player.blocking = (!!this.keys.S?.isDown || !!pad?.buttons[4]?.pressed || !!pad?.buttons[5]?.pressed || now < this.touchBlockUntil) && this.player.grounded && !this.player.busy;
     const pressed = (index: number): boolean => !!pad?.buttons[index]?.pressed;
     const justPressed = (index: number): boolean => pressed(index) && !this.padPrevious[index];
-    const keyJust = (key: string): boolean => !!this.keys[key] && Phaser.Input.Keyboard.JustDown(this.keys[key]);\n    const jumpPressed = keyJust("W") || justPressed(0) || justPressed(12) || this.pendingActions.jump;
+    const keyJust = (key: string): boolean => !!this.keys[key] && Phaser.Input.Keyboard.JustDown(this.keys[key]);
+    const jumpPressed = keyJust("W") || justPressed(0) || justPressed(12) || this.pendingActions.jump;
     const lightPressed = keyJust("J") || justPressed(2) || this.pendingActions.light;
     const heavyPressed = keyJust("K") || justPressed(3) || this.pendingActions.heavy;
     const specialPressed = keyJust("L") || justPressed(1) || this.pendingActions.special;
-    const restartPressed = keyJust("R") || justPressed(9) || this.pendingActions.restart;\n    this.pendingActions = { jump: false, light: false, heavy: false, special: false, restart: false };
+    const restartPressed = keyJust("R") || justPressed(9) || this.pendingActions.restart;
+    this.pendingActions = { jump: false, light: false, heavy: false, special: false, restart: false };
     this.padPrevious = Array.from({length: Math.max(16, pad?.buttons.length ?? 0)}, (_, i) => pressed(i));
     if (jumpPressed) this.player.jump();
     if (lightPressed) this.player.startAttack(MOVES.light, now);
